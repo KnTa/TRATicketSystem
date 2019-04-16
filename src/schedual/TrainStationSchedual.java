@@ -1,4 +1,6 @@
-package station;
+package schedual;
+
+import station.Station;
 
 import java.util.Date;
 
