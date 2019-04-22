@@ -1,7 +1,42 @@
 package station;
 
+import SQL.SQLStation;
+import train.ReadStationAdpter;
+
 public class Station {
     private String name_TCN;
     private String name_EN;
-    private String ID;
+    private int ID;
+
+    private static ReadStation readStation;
+
+    static {
+        readStation = ReadStationAdpter.getReadStaion();
+    }
+
+    public Station(int id, String name_EN, String name_TCN){
+        this.ID = id;
+        this.name_EN = name_EN;
+        this.name_TCN = name_TCN;
+    }
+
+    public int getID() {
+        return ID;
+    }
+
+    public String getName_EN() {
+        return name_EN;
+    }
+
+    public String getName_TCN() {
+        return name_TCN;
+    }
+
+    public boolean compare(Station station){
+        return this.ID == station.getID();
+    }
+
+    public static Station getStation(int id){
+        return readStation.getStation(id);
+    }
 }

@@ -10,5 +10,11 @@ public class TrainTime {
     private Date date;
     private int train_class;
     private TrainFormation train_formation;
-    private List<TrainStationSchedual> station_schedual_list;
+    private List<TrainStationSchedule> station_schedual_list;
+
+    public TrainTime(int id, Date date, int train_class){
+        this.date = date;
+        this.ID = id;
+        this.train_class =train_class;
+    }
 }
