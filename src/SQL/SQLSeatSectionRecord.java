@@ -47,16 +47,16 @@ public class SQLSeatSectionRecord implements ReadSeatSectionRecord {
                     + arrive + ", "
                     + ticket
                     + ");");
-            SQLManager.commite();
+            SQLManager.commit();
         }catch (Exception e){System.err.println( e.getClass().getName() + ": " + e.getMessage() );}
     }
     public void updateSectionRecord(int car_id, int seat_id, int ticket){
         try {
-            statement.executeUpdate("UPDATE seat_section_record set "
+            statement.executeUpdate("UPDATE seat_section_record SET "
                     + "car = " + car_id +", "
                     + "seat = " + seat_id
                     + " WHERE ticket_id = " + ticket + ";");
-            SQLManager.commite();
+            SQLManager.commit();
         }catch (Exception e){System.err.println( e.getClass().getName() + ": " + e.getMessage() );}
     }
 
@@ -64,7 +64,7 @@ public class SQLSeatSectionRecord implements ReadSeatSectionRecord {
         try {
             statement.executeUpdate("DELETE from seat_section_record WHERE "
                     + " ticket_id = " + ticket + ";");
-            SQLManager.commite();
+            SQLManager.commit();
         }catch (Exception e){System.err.println( e.getClass().getName() + ": " + e.getMessage() );}
     }
 }

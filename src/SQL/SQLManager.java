@@ -1,10 +1,6 @@
 package SQL;
 
-import train.ReadTrainFormation;
-import train.TrainFormation;
-
 import java.sql.*;
-import java.text.SimpleDateFormat;
 
 public class SQLManager {
     private static Connection c;
@@ -12,7 +8,7 @@ public class SQLManager {
         c =null;
         try{
             Class.forName("org.sqlite.JDBC");
-            c = DriverManager.getConnection("jdbc:sqlite:../ticket_database.sqlite");
+            c = DriverManager.getConnection("jdbc:sqlite:./database/ticket_database.sqlite");
             c.setAutoCommit(false);
         }catch (Exception e){
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
@@ -29,7 +25,7 @@ public class SQLManager {
         }
     }
 
-    public static void commite(){
+    public static void commit(){
         try{
             c.commit();
         }catch (Exception e){

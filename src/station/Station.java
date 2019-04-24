@@ -1,8 +1,5 @@
 package station;
 
-import SQL.SQLStation;
-import train.ReadStationAdpter;
-
 public class Station {
     private String name_TCN;
     private String name_EN;
@@ -11,7 +8,7 @@ public class Station {
     private static ReadStation readStation;
 
     static {
-        readStation = ReadStationAdpter.getReadStaion();
+        readStation = ReadStationAdapter.getReadStation();
     }
 
     public Station(int id, String name_EN, String name_TCN){
