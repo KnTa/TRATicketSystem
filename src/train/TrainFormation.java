@@ -11,8 +11,8 @@ public class TrainFormation {
     public TrainFormation(int train_id, Date date){
         this.train_id = train_id;
         this.date = date;
-        ReadTrainFormation readTrainFormation = ReadTrainFormationAdapter.getReadTrainFormation();
-        cars = readTrainFormation.getFormation(this.train_id, this.date);
+        TrainFormationDataControl trainFormationDataControl = TrainFormationDataControlAdapter.getReadTrainFormation();
+        cars = trainFormationDataControl.getFormation(this.train_id, this.date);
     }
 }
 

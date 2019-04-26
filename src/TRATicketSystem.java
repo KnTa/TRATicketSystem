@@ -1,12 +1,11 @@
-import SQL.SQLManager;
+import ui.*;
 
-import java.sql.Statement;
+import javax.swing.*;
 
 public class TRATicketSystem {
-    public static SQLManager sqlManager;
 
     public static void main(String[] args) {
-        //sqlManager = new SQLManager();
+        TicketUI.main(null);
         System.out.println("Hello! World!");
     }
 }

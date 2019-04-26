@@ -1,6 +1,6 @@
 package SQL;
 
-import train.ReadSeatSectionRecord;
+import train.SeatSectionRecordDataControl;
 import train.SectionRecord;
 
 import java.sql.ResultSet;
@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 import java.text.SimpleDateFormat;
 
-public class SQLSeatSectionRecord implements ReadSeatSectionRecord {
+public class SQLSeatSectionRecordDataControl implements SeatSectionRecordDataControl {
     private static Statement statement;
     private static SimpleDateFormat simpleDateFormat;
     static {
@@ -50,7 +50,7 @@ public class SQLSeatSectionRecord implements ReadSeatSectionRecord {
             SQLManager.commit();
         }catch (Exception e){System.err.println( e.getClass().getName() + ": " + e.getMessage() );}
     }
-    public void updateSectionRecord(int car_id, int seat_id, int ticket){
+    public void updateSectionRecord(int ticket, int car_id, int seat_id){
         try {
             statement.executeUpdate("UPDATE seat_section_record SET "
                     + "car = " + car_id +", "

@@ -2,7 +2,7 @@ package station;
 
 import java.util.List;
 
-public interface ReadStation {
+public interface StationDataControl {
     public Station getStation(int id);
     public List<Station> getAllStation();
 }

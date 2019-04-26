@@ -5,10 +5,10 @@ public class Station {
     private String name_EN;
     private int ID;
 
-    private static ReadStation readStation;
+    private static StationDataControl stationDataControl;
 
     static {
-        readStation = ReadStationAdapter.getReadStation();
+        stationDataControl = StationDataControlAdapter.getReadStation();
     }
 
     public Station(int id, String name_EN, String name_TCN){
@@ -34,6 +34,10 @@ public class Station {
     }
 
     public static Station getStation(int id){
-        return readStation.getStation(id);
+        return stationDataControl.getStation(id);
+    }
+
+    public String toString(){
+        return name_TCN;
     }
 }

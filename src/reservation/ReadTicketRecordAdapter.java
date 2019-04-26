@@ -1,9 +1,9 @@
 package reservation;
 
-import SQL.SQLReadTicketRecord;
+import SQL.SQLTicketRecord;
 
 public class ReadTicketRecordAdapter {
     public static ReadTicketRecord getReadTicketRecord(){
-        return new SQLReadTicketRecord();
+        return new SQLTicketRecord();
     }
 }

@@ -2,8 +2,6 @@ package schedual;
 
 import station.Station;
 import station.StationManager;
-import train.ReadTrainFormation;
-import train.ReadTrainFormationAdapter;
 import train.TrainFormation;
 
 import java.util.Date;

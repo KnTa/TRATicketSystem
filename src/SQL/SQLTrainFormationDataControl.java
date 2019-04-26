@@ -1,7 +1,7 @@
 package SQL;
 
 import train.Car;
-import train.ReadTrainFormation;
+import train.TrainFormationDataControl;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class SQLTrainFormation implements ReadTrainFormation{
+public class SQLTrainFormationDataControl implements TrainFormationDataControl {
     private static Statement statement;
     private static SimpleDateFormat simpleDateFormat;
     static {

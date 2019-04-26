@@ -1,17 +1,21 @@
-package SQL;
+package Test;
 
+import SQL.SQLStationDataControl;
 import org.junit.Before;
 import station.Station;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertTrue;
 
 public class SQLStationTest {
-    SQLStation sqlStation;
+    SQLStationDataControl sqlStation;
 
     @Before
     public void setUp() {
-        sqlStation = new SQLStation();
+        sqlStation = new SQLStationDataControl();
     }
 
     @org.junit.Test
@@ -24,5 +28,8 @@ public class SQLStationTest {
 
     @org.junit.Test
     public void getAllStation() {
+        List<Station> stationList = new ArrayList<>();
+        stationList = sqlStation.getAllStation();
+        assertTrue(stationList.size()!=0);
     }
 }

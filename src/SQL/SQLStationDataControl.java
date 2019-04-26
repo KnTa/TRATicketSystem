@@ -1,15 +1,14 @@
 package SQL;
 
-import station.ReadStation;
+import station.StationDataControl;
 import station.Station;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SQLStation implements ReadStation {
+public class SQLStationDataControl implements StationDataControl {
     private static Statement statement;
     static {
         statement= SQLManager.getStatement();

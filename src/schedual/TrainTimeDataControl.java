@@ -2,6 +2,6 @@ package schedual;
 
 import java.util.List;
 
-public interface ReadTrainTime {
+public interface TrainTimeDataControl {
     List<TrainTime> getAllTrainTime();
 }

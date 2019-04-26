@@ -6,23 +6,30 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
-public class SQLReadTicketRecord implements ReadTicketRecord {
+public class SQLTicketRecord implements ReadTicketRecord {
     private static Statement statement;
     private static SimpleDateFormat simpleDateFormat, simpleDateFormat_time;
+    private static DateTimeFormatter dateTimeFormatter;
     static {
         statement= SQLManager.getStatement();
         simpleDateFormat = new SimpleDateFormat ("yyyy-MM-dd");
-        simpleDateFormat_time = new SimpleDateFormat ("yyyy-MM-dd HH:MM");
+        simpleDateFormat_time = new SimpleDateFormat ("yyyy-MM-dd HH:MM:SS");
+        dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:MM:SS");
     }
     public void setTicketRecord(int ticket_id, int train_id, Date date, int car_id, int seat_id, int departure, int arrive, int status){
         try {
+            LocalDateTime localDateTime = LocalDateTime.now();
+
             statement.executeUpdate("INSERT INTO ticket_record VALUES ("
                     + ticket_id + ", "
                     + train_id + ", "
-                    + simpleDateFormat.format(date) + ", "
-                    + simpleDateFormat_time.format(LocalDateTime.now()) + ", "
+                    + "'" + simpleDateFormat.format(date) + "', "
+                    + "'" + dateTimeFormatter.format(localDateTime) + "', "
                     + departure + ", "
                     + arrive + ", "
                     + car_id + ", "
