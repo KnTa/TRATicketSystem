@@ -19,4 +19,20 @@ public class TrainStationSchedule {
         this.next_station = StationManager.getStation(next_station_id);
         this.train_time = train_time;
     }
+
+    public Station getStation() {
+        return station;
+    }
+
+    public Station getNext_station() {
+        return next_station;
+    }
+
+    public Date getArrive_time() {
+        return arrive_time;
+    }
+
+    public Date getDeparture_time() {
+        return departure_time;
+    }
 }

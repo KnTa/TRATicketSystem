@@ -1,9 +1,14 @@
 package reservation;
 
+import train.SeatInfo;
+
+import java.util.List;
+
 public class TicketStatus {
     private int ID;
     private int status;
-    //private TicketInfo section;
+
+    private ReadTicketRecord readTicketRecord = ReadTicketRecordAdapter.getReadTicketRecord();
 
     public final int STATUS_CONFIRM = 1;
     public final int STATUS_RESERVING = 0;
@@ -26,7 +31,17 @@ public class TicketStatus {
         return status;
     }
 
-    void confirm(){
+    public String getStatusString(){
+        switch (status){
+            case STATUS_CONFIRM:
+                return "確定";
+            case STATUS_RESERVING:
+                return "未確定";
+        }
+        return "";
+    }
 
+    void confirm(){
+        readTicketRecord.updateTicketStatus(getID(), this.STATUS_CONFIRM);
     }
 }

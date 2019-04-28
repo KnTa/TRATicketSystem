@@ -18,6 +18,10 @@ public class StationManager {
                 return s;
             }
         }
-        return null;
+        return getEmptyStation();
+    }
+
+    private static Station getEmptyStation(){
+        return new Station(0,"","");
     }
 }

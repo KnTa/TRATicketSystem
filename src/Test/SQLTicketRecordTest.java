@@ -3,6 +3,7 @@ package Test;
 import SQL.SQLTicketRecord;
 import org.junit.Before;
 import org.junit.Test;
+import reservation.TicketInfo;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
@@ -37,6 +38,9 @@ public class SQLTicketRecordTest {
         sqlTicketRecord.updateTicketRecord(ticket_id, 1, 1);
         sqlTicketRecord.updateTicketStatus(ticket_id, 1);
 
+        TicketInfo ticketInfo = sqlTicketRecord.getTicketRecord(ticket_id);
+        assertTrue(ticketInfo!=null);
+
         LocalDateTime ldt = LocalDateTime.now();
         ZonedDateTime zdt = ldt.atZone(ZoneId.systemDefault());
         Date date = Date.from(zdt.toInstant());
@@ -44,5 +48,10 @@ public class SQLTicketRecordTest {
         String reservation = simpleDateFormat.format(reservationDate);
         assertTrue(simpleDateFormat.format(date).compareTo(reservation)==0);
         sqlTicketRecord.deleteTicketRecord(ticket_id);
+    }
+
+    @Test
+    public void  GetMaxId(){
+        assertTrue(sqlTicketRecord.getMaxId()!=-1);
     }
 }
