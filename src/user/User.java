@@ -15,12 +15,12 @@ import java.util.Map;
 
 public class User {
     public Reservation reservation;
-    public static List<Station> getAllStation(){
-        return StationManager.getAllStation();
-    }
-
     public User(){
         reservation = new Reservation();
+    }
+
+    public static List<Station> getAllStation(){
+        return StationManager.getAllStation();
     }
 
     public Map<Integer,Ticket> reserveTicket(int departure, int arrive, Date startTime, Date endTime, int timeCondition, int condition, int number)throws Exception{
@@ -51,13 +51,14 @@ public class User {
         }
 
         seatInfoList.add(ticket.getTicketInfo().getTrain_seat_info().getSeat_info());
-        try{
-            reservation.selectSeat(ticketID, selectResult);
-        }catch (Exception e){return false;}
+
+        reservation.selectSeat(ticketID, selectResult);
+
         seatInfoList.add(selectResult);
         TrainTable.updateSeatRecord(seatInfoList, ticket.getTicketInfo().getTrain_seat_info().getTrain_id(), ticket.getTicketInfo().getTrain_seat_info().getDate());
         return true;
     }
+
     public boolean confirm(){
         List<SeatInfo> seatInfoList;
         seatInfoList = reservation.confirm();

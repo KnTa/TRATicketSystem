@@ -43,5 +43,6 @@ public class TicketStatus {
 
     void confirm(){
         readTicketRecord.updateTicketStatus(getID(), this.STATUS_CONFIRM);
+        status = STATUS_CONFIRM;
     }
 }

@@ -14,6 +14,7 @@ public class TrainTable {
     }
 
     public static List<TrainSeatInfo> searchTrainSeat(int departure, int arrive, Date startTime, Date endTime, int timeCondition, int condition, int number)throws Exception {
+        if(startTime.compareTo(endTime)!=-1){throw new Exception("時間錯誤");}
         List<TrainSeatInfo> trainSeatInfoList=null;
         for(TrainTime trainTime:time_list){
             if(trainTime.checkTrainTime(departure, arrive, startTime, endTime, timeCondition)){

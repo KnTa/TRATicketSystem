@@ -16,7 +16,7 @@ import java.util.*;
 
 
 public class TicketUI {
-    public static final int MAX_SEAT=52;
+    public static final int MAX_SEAT = 52;
 
     private static JFrame frame;
 
@@ -66,7 +66,7 @@ public class TicketUI {
     Map<Integer, Ticket> ticketMap;
     Map<Integer, Map<Integer, Boolean>> allSeatStatus;
 
-    public TicketUI(){
+    public TicketUI() {
         btnSeat = new TreeMap<>();
         initSeatPanelUI();
         initComboBox();
@@ -75,95 +75,119 @@ public class TicketUI {
         initConfirmButton();
         user = new User();
     }
+
     //設定GridBagConstraints
-    private GridBagConstraints getGridBagConstraintsSetting(int x,int y){
+    private GridBagConstraints getGridBagConstraintsSetting(int x, int y) {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.fill = GridBagConstraints.HORIZONTAL;
         gbc.ipady = 15;
         gbc.ipadx = 15;
-        gbc.gridx=x;
-        gbc.gridy=y;
+        gbc.gridx = x;
+        gbc.gridy = y;
         return gbc;
     }
+
     //設定combobox內容為小時
-    private void setComboBoxHour(JComboBox comboBox){
-        for(int i=0;i<24;i++){
+    private void setComboBoxHour(JComboBox comboBox) {
+        for (int i = 0; i < 24; i++) {
             comboBox.addItem(Integer.toString(i));
         }
     }
+
     //設定combobox內容為分鐘
-    private void setComboBoxMinute(JComboBox comboBox){
-        for(int i=0;i<60;i++){
+    private void setComboBoxMinute(JComboBox comboBox) {
+        for (int i = 0; i < 60; i++) {
             comboBox.addItem(Integer.toString(i));
         }
     }
+
     //設定combobox內容為車站
-    private void setStationComboBox(JComboBox comboBox){
+    private void setStationComboBox(JComboBox comboBox) {
         Iterator it = User.getAllStation().iterator();
-        while(it.hasNext()){
+        while (it.hasNext()) {
             comboBox.addItem(it.next());
         }
     }
+
     //設定combobox內容為選座條件
-    class Condition{
+    class Condition {
         private int key;
         private String name;
 
-        Condition(int key, String name){
-            this.key=key;
-            this.name=name;
+        Condition(int key, String name) {
+            this.key = key;
+            this.name = name;
         }
 
         public int getKey() {
             return key;
         }
-        public String getName(){
+
+        public String getName() {
             return name;
         }
-        public String toString(){
+
+        public String toString() {
             return name;
         }
     }
-    private void setConditionComboBox(JComboBox comboBox){
+
+    private void setConditionComboBox(JComboBox comboBox) {
         comboBox.addItem(new Condition(ReserveCondition.SEAT_CONDITION_NONE, "無"));
         comboBox.addItem(new Condition(ReserveCondition.SEAT_CONDITION_WINDOW, "靠窗"));
         comboBox.addItem(new Condition(ReserveCondition.SEAT_CONDITION_AISLE, "靠走道"));
     }
+
     //在Panel新增座位按鈕
-    private void addSeatButton(JPanel panel,JButton button,int x,int y,int seatNum){
-        panel.add(button, getGridBagConstraintsSetting(x,y));
-        btnSeat.put(new Integer(seatNum),button);
+    private void addSeatButton(JPanel panel, JButton button, int x, int y, int seatNum) {
+        panel.add(button, getGridBagConstraintsSetting(x, y));
+        btnSeat.put(new Integer(seatNum), button);
         button.setEnabled(false);
         button.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-
+                        if (user != null) {
+                            //!!!!entry為暫時的!!!!//需要正式的ticket id 選擇
+                            Map.Entry<Integer, Ticket> entry = ticketMap.entrySet().iterator().next();
+                            try {
+                                Integer car = (Integer) cmb_car.getSelectedItem();
+                                user.selectSeat(entry.getValue().getStatus().getID()
+                                        , car, Integer.parseInt(button.getText()));
+                                updateAllSeatStatus(entry);
+                                setSeatButton(car);
+                            } catch (Exception error) {
+                                standErrorBox(error);
+                            }
+                        }
                     }
-        });
+                });
     }
+
     //在Panel新增component
-    private void addComponent(JPanel panel, Component component, int x, int y){
-        panel.add(component, getGridBagConstraintsSetting(x,y));
+    private void addComponent(JPanel panel, Component component, int x, int y) {
+        panel.add(component, getGridBagConstraintsSetting(x, y));
     }
+
     //初始化座位UI
-    private void initSeatPanelUI(){
+    private void initSeatPanelUI() {
         pnlSeat.setLayout(new GridBagLayout());
 
-        for(int i=0;i<13;i++){
-            int seat=i*4+1;
+        for (int i = 0; i < 13; i++) {
+            int seat = i * 4 + 1;
             addSeatButton(pnlSeat, new JButton(Integer.toString(seat)), 0, i, seat);
-            seat=i*4+3;
+            seat = i * 4 + 3;
             addSeatButton(pnlSeat, new JButton(Integer.toString(seat)), 1, i, seat);
             addComponent(pnlSeat, new JPanel(), 2, i);
-            seat=i*4+4;
+            seat = i * 4 + 4;
             addSeatButton(pnlSeat, new JButton(Integer.toString(seat)), 3, i, seat);
-            seat=i*4+2;
+            seat = i * 4 + 2;
             addSeatButton(pnlSeat, new JButton(Integer.toString(seat)), 4, i, seat);
         }
     }
+
     //初始化combobox
-    private void initComboBox(){
+    private void initComboBox() {
         setComboBoxHour(cmb_search_start_hour);
         setComboBoxHour(cmb_search_end_hour);
         setComboBoxHour(cmb_reserve_start_hour);
@@ -183,101 +207,123 @@ public class TicketUI {
 
         cmb_car.setEnabled(false);
     }
+
     //初始化定位按鈕
-    private void initReserveButton(){
+    private void initReserveButton() {
         btn_reserve.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-                        reserveProgress();
+                        try {
+                            reserveProgress();
+                            btn_reserve.setEnabled(false);
+                            btn_confirm.setEnabled(true);
+                        } catch (Exception error) {
+                            standErrorBox(error);
+                        }
                     }
                 }
         );
     }
-    private void reserveProgress(){
+
+    private void reserveProgress() throws Exception {
         user = new User();
         int year, month, day;
         Date startDate;
         Date endDate;
+        Integer start_hour = Integer.parseInt((String) cmb_reserve_start_hour.getSelectedItem());
+        Integer start_minute = Integer.parseInt((String) cmb_reserve_start_minute.getSelectedItem());
 
-        try{
-            Integer start_hour = (Integer) cmb_reserve_start_hour.getSelectedItem();
-            Integer start_minute = (Integer)cmb_reserve_start_minute.getSelectedItem();
+        Integer end_hour = Integer.parseInt((String) cmb_reserve_end_hour.getSelectedItem());
+        Integer end_minute = Integer.parseInt((String) cmb_reserve_end_minute.getSelectedItem());
 
-            Integer end_hour = (Integer)cmb_reserve_end_hour.getSelectedItem();
-            Integer end_minute = (Integer)cmb_reserve_end_minute.getSelectedItem();
-
-            year = Integer.parseInt(txf_reserve_year.getText());
-            month = Integer.parseInt(txf_reserve_month.getText());
-            day = Integer.parseInt(txf_reserve_day.getText());
-            startDate = new GregorianCalendar(year, month, day, start_hour, start_minute).getTime();
-            endDate = new GregorianCalendar(year, month, day, end_hour, end_minute).getTime();
-        }
-        catch (Exception e){standErrorBox(e);return;}
+        year = Integer.parseInt(txf_reserve_year.getText());
+        month = Integer.parseInt(txf_reserve_month.getText());
+        day = Integer.parseInt(txf_reserve_day.getText());
+        startDate = new GregorianCalendar(year, month - 1, day, start_hour, start_minute).getTime();
+        endDate = new GregorianCalendar(year, month - 1, day, end_hour, end_minute).getTime();
 
         Station departure = (Station) cmb_reserve_departure.getSelectedItem();
         Station arrive = (Station) cmb_reserve_arrive.getSelectedItem();
+        if (departure.compare(arrive)) {
+            throw new Exception("相同起訖站");
+        }
         Condition reserveSeatCondition = (Condition) cmb_reserve_condition.getSelectedItem();
-        try{
-            ticketMap = user.reserveTicket(departure.getID(), arrive.getID(),
-                    startDate, endDate, 1, reserveSeatCondition.getKey(),1);
-        }catch (Exception e){standErrorBox(e);ticketMap.clear();return;}
+
+        ticketMap = user.reserveTicket(departure.getID(), arrive.getID(),
+                startDate, endDate, 1, reserveSeatCondition.getKey(), 1);
+
         setReservationComponentEnable(false);
 
-        Map.Entry<Integer, Ticket> entry=ticketMap.entrySet().iterator().next();
+        Map.Entry<Integer, Ticket> entry = ticketMap.entrySet().iterator().next();
         setTicketInfo(entry);
-        try{
-            allSeatStatus = user.getAllSeatCurrentStatus(entry.getValue().getTicketInfo().getTrain_seat_info().getTrain_id()
-                , entry.getValue().getTicketInfo().getTrain_seat_info().getDate()
-                , departure.getID(), arrive.getID());
-            setSeatButtonStatus(entry);
-        }catch (Exception e){standErrorBox(e);return;}
 
+        setSeatButtonStatus(entry);
     }
 
-    private void setSeatButtonStatus(Map.Entry<Integer, Ticket> entry){
-        allSeatStatus.forEach((car, seats)->cmb_car.addItem(car));
+    private void updateAllSeatStatus(Map.Entry<Integer, Ticket> entry)throws Exception{
+        allSeatStatus = user.getAllSeatCurrentStatus(entry.getValue().getTicketInfo().getTrain_seat_info().getTrain_id()
+                , entry.getValue().getTicketInfo().getTrain_seat_info().getDate()
+                , entry.getValue().getTicketInfo().getDeparture().getID(), entry.getValue().getTicketInfo().getArrive().getID());
+    }
+    private void setSeatButtonStatus(Map.Entry<Integer, Ticket> entry)throws Exception {
+
+        updateAllSeatStatus(entry);
+
+        allSeatStatus.forEach((car_id, seats) -> cmb_car.addItem(car_id));
         cmb_car.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent e) {
-                Integer car = (Integer) cmb_car.getSelectedItem();
-                setSeatButtonByCar(car);
-                ticketMap.forEach((id, ticket)->setReserveSeatButton(car, ticket));
+                try {
+                    Integer car = (Integer) cmb_car.getSelectedItem();
+                    setSeatButtonByCar(car);
+                    ticketMap.forEach((id, ticket) -> setReserveSeatButton(car, ticket));
+                } catch (Exception error) {
+                    standErrorBox(error);
+                }
             }
         });
         Integer car = entry.getValue().getTicketInfo().getTrain_seat_info().getSeat_info().getCar_id();
         cmb_car.setSelectedItem(car);
         cmb_car.setEnabled(true);
+
+        setSeatButton(car);
+    }
+
+    public void setSeatButton(int car)throws Exception{
         //設定座位狀態
         setSeatButtonByCar(car);
         //設置自己訂的座位
-        ticketMap.forEach((id, ticket)->setReserveSeatButton(car, ticket));
+        ticketMap.forEach((id, ticket) -> setReserveSeatButton(car, ticket));
     }
 
-    private void setSeatButtonByCar(int car){
+    private void setSeatButtonByCar(int car) {
         Map<Integer, Boolean> seatStatus = allSeatStatus.get(car);
-        for(int i=1;i<=MAX_SEAT;i++){
-            if(seatStatus.get(i)==null){break;}
+        for (int i = 1; i <= MAX_SEAT; i++) {
+            if (seatStatus.get(i) == null) {
+                break;
+            }
             JButton seat = btnSeat.get(i);
-            if(seatStatus.get(i)){
+            if (!seatStatus.get(i)) {
                 seat.setEnabled(false);
                 seat.setBackground(Color.RED);
-            }else {
+            } else {
                 seat.setEnabled(true);
+                seat.setBackground(UIManager.getColor ( "Panel.background" ));
             }
         }
     }
 
-    private void setReserveSeatButton(int car, Ticket ticket){
-        if(ticket.getTicketInfo().getTrain_seat_info().getSeat_info().getCar_id()
-                ==car){
+    private void setReserveSeatButton(int car, Ticket ticket) {
+        if (ticket.getTicketInfo().getTrain_seat_info().getSeat_info().getCar_id()
+                == car) {
             JButton seatButton = btnSeat.get(ticket.getTicketInfo().getTrain_seat_info().getSeat_info().getSeat_id());
             seatButton.setEnabled(false);
             seatButton.setBackground(Color.GREEN);
         }
     }
 
-    private void setTicketInfo(Map.Entry<Integer, Ticket> entry){
+    private void setTicketInfo(Map.Entry<Integer, Ticket> entry) {
         lab_start_station.setText(entry.getValue().getTicketInfo().getDeparture().getName_TCN());
         lab_end_station.setText(entry.getValue().getTicketInfo().getArrive().getName_TCN());
         lab_ticket_id.setText(Integer.toString(entry.getValue().getStatus().getID()));
@@ -293,11 +339,12 @@ public class TicketUI {
         lab_train_time.setText(Integer.toString(entry.getValue().getTicketInfo().getTrain_seat_info().getTrain_id()));
     }
 
-    private void standErrorBox(Exception e){
+    public void standErrorBox(Exception e) {
         JOptionPane.showMessageDialog(frame, e.getClass().getName() + ": " + e.getMessage());
     }
+
     //初始化搜尋按鈕
-    private void initSearchButton(){
+    private void initSearchButton() {
         btn_search.addActionListener(
                 new ActionListener() {
                     @Override
@@ -307,20 +354,30 @@ public class TicketUI {
                 }
         );
     }
+
     //初始化確定按鈕
-    private void initConfirmButton(){
+    private void initConfirmButton() {
         btn_confirm.addActionListener(
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
+                        if (user != null) {
+                            try {
+                                user.confirm();
+                                btn_confirm.setEnabled(false);
+                                Map.Entry<Integer, Ticket> entry = ticketMap.entrySet().iterator().next();
+                                lab_ticket_status.setText(entry.getValue().getStatus().getStatusString());
+                            }catch (Exception error){standErrorBox(error);}
 
+                        }
                     }
                 }
         );
         btn_confirm.setEnabled(false);
     }
+
     //設定訂票元件是否enable
-    private void setReservationComponentEnable(boolean enable){
+    private void setReservationComponentEnable(boolean enable) {
         txf_reserve_day.setEnabled(enable);
         txf_reserve_month.setEnabled(enable);
         txf_reserve_year.setEnabled(enable);

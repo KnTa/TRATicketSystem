@@ -2,7 +2,7 @@ package station;
 
 import java.util.List;
 
-public class StationManager {
+public class  StationManager {
     private static List<Station> stationList;
     static{
         stationList = StationDataControlAdapter.getReadStation().getAllStation();

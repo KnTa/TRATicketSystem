@@ -48,8 +48,8 @@ public class TrainTime {
         switch (timeCondition){
             case 1:
                 Date departureDate = getTrainStationSchedule(departure).getDeparture_time();
-                Date arriveDate = getTrainStationSchedule(departure).getArrive_time();
-                int result_start = startTime.compareTo(arriveDate);
+                if(departureDate==null){return false;}
+                int result_start = startTime.compareTo(departureDate);
                 int result_end = endTime.compareTo(departureDate);
                 if(result_start<=0 && result_end>=0)
                     {return true;}
@@ -62,6 +62,7 @@ public class TrainTime {
     public List<TrainSeatInfo> getSeatByCondition(int departure, int arrive, int condition, int number) throws Exception {
         List<SeatInfo> seatInfoList = train_formation.getSeatByCondition(departure, arrive, condition, number);
         List<TrainSeatInfo> trainSeatInfoList = new ArrayList<>();
+        if(seatInfoList==null){return null;}
         for(SeatInfo seatInfo:seatInfoList){
             trainSeatInfoList.add(new TrainSeatInfo(ID, date, seatInfo, departure, arrive));
         }
@@ -122,7 +123,6 @@ public class TrainTime {
         }
         return null;
     }
-
 
     public Date getStationDepartureTime(int station) {
         return getTrainStationSchedule(station).getDeparture_time();

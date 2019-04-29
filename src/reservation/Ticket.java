@@ -46,12 +46,16 @@ public class Ticket {
     public TicketStatus getStatus() { return status; }
 
     public void selectSeat(SeatInfo selectResult) {
-        readTicketRecord.updateTicketRecord(status.getID(), selectResult.getCar_id(), selectResult.getSeat_id());
-        seatSectionRecordDataControl.updateSectionRecord(selectResult.getCar_id(), selectResult.getSeat_id(),status.getID());
+        updateTicket(selectResult);
         ticket_info.setSeatInfo(selectResult);
     }
 
-    SeatInfo confirm() {
+    protected void updateTicket(SeatInfo seatInfo){
+        readTicketRecord.updateTicketRecord(status.getID(), seatInfo.getCar_id(), seatInfo.getSeat_id());
+        seatSectionRecordDataControl.updateSectionRecord(seatInfo.getCar_id(), seatInfo.getSeat_id(),status.getID());
+    }
+
+    protected SeatInfo confirm() {
         status.confirm();
         return ticket_info.getTrain_seat_info().getSeat_info();
     }

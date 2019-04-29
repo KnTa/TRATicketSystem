@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
 
 public class SQLTicketRecordTest {
     SQLTicketRecord sqlTicketRecord;
-    int ticket_id = 1;
+    int ticket_id = -1;
     int train_id = 0;
     Date date = new GregorianCalendar(2019, 06, 01).getTime();;
     int car_id = 0;

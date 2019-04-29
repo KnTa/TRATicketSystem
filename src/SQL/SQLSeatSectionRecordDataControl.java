@@ -50,7 +50,7 @@ public class SQLSeatSectionRecordDataControl implements SeatSectionRecordDataCon
             SQLManager.commit();
         }catch (Exception e){System.err.println( e.getClass().getName() + ": " + e.getMessage() );}
     }
-    public void updateSectionRecord(int ticket, int car_id, int seat_id){
+    public void updateSectionRecord(int car_id, int seat_id, int ticket){
         try {
             statement.executeUpdate("UPDATE seat_section_record SET "
                     + "car = " + car_id +", "

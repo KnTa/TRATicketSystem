@@ -27,11 +27,11 @@ public class SeatSectionRecord {
     sectionRecordList = seatSectionRecordDataControl.getSectionRecord(train_time, date, car_id, seat_id);
   }
 
-  void updateSeatSectionRecord(){
+  protected void updateSeatSectionRecord(){
     checkReserveOverTime();
     sectionRecordList = seatSectionRecordDataControl.getSectionRecord(train_time, date, car_id, seat_id);
   }
-  void checkReserveOverTime(){
+  protected void checkReserveOverTime(){
     ReadTicketRecord readTicketRecord = ReadTicketRecordAdapter.getReadTicketRecord();
     for(SectionRecord sectionRecord:sectionRecordList){
       Date reserveDate = readTicketRecord.getTicketReserveDate(sectionRecord.ticket_id);
