@@ -4,8 +4,6 @@ import train.SeatInfo;
 import train.SeatSectionRecordDataControl;
 import train.SeatSectionRecordDataControlAdapter;
 
-import java.util.List;
-
 public class Ticket {
     private TicketStatus status;
     private TicketInfo ticket_info;

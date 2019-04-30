@@ -33,10 +33,6 @@ public class Station {
         return this.ID == station.getID();
     }
 
-    public static Station getStation(int id){
-        return stationDataControl.getStation(id);
-    }
-
     public String toString(){
         return name_TCN;
     }

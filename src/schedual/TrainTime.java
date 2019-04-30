@@ -115,15 +115,6 @@ public class TrainTime {
         return  train_formation.selectSeat(ticketID,departure,arrive,car,seat);
     }
 
-    private TrainStationSchedule getStationSchedule(int station){
-        for(TrainStationSchedule trainStationSchedule:station_schedule_list){
-            if(trainStationSchedule.getStation().getID()==station){
-                return trainStationSchedule;
-            }
-        }
-        return null;
-    }
-
     public Date getStationDepartureTime(int station) {
         return getTrainStationSchedule(station).getDeparture_time();
     }

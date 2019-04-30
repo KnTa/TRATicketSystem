@@ -9,6 +9,7 @@ public class SQLManager {
         try{
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:./database/ticket_database.sqlite");
+//            c = DriverManager.getConnection("jdbc:sqlite:database/ticket_database.sqlite");
             c.setAutoCommit(false);
         }catch (Exception e){
             System.err.println( e.getClass().getName() + ": " + e.getMessage() );
