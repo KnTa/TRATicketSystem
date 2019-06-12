@@ -4,6 +4,7 @@ import reservation.Reservation;
 import reservation.Ticket;
 import reservation.TrainSeatInfo;
 import schedual.TrainTable;
+import schedual.TrainTime;
 import station.Station;
 import station.StationManager;
 import train.SeatInfo;
@@ -30,6 +31,10 @@ public class User {
         ticketMap = reservation.ticketReservation(trainSeatInfoList);
         TrainTable.updateSeatRecord(trainSeatInfoList);
         return ticketMap;
+    }
+
+    public List<TrainTime> searchTrain(int departure, int arrive, Date startTime, Date endTime, int timeCondition, int condition, int number)throws Exception{
+        return TrainTable.searchTrain(departure, arrive, startTime, endTime, timeCondition, condition, number);
     }
 
     public Map<Integer,Map<Integer,Boolean>> getAllSeatCurrentStatus(int train_id, Date date, int departure, int arrive)throws Exception{

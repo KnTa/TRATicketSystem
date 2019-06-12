@@ -35,10 +35,6 @@ public class TrainTableTest {
     }
 
     @Test
-    public void getTrainTime() {
-    }
-
-    @Test
     public void updateSeatRecordTest(){
         TrainSeatInfo trainSeatInfo = null;
         List<TrainSeatInfo> list = new ArrayList<>();

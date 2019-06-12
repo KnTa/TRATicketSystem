@@ -1,11 +1,14 @@
 package ui;
 
 import reservation.Ticket;
+import schedual.TrainTime;
 import station.Station;
 import user.ReserveCondition;
 import user.User;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +16,7 @@ import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.List;
 
 
 public class TicketUI {
@@ -58,10 +62,13 @@ public class TicketUI {
     private JLabel lab_ticket_status;
     private JLabel lab_train_time;
     private JButton btn_confirm;
+    private JTable tbl_searchResult;
     private Map<Integer, JButton> btnSeat;
     private User user;
     private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
     private SimpleDateFormat simpleDateFormat_time = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+    private DefaultTableModel searchResultDataModel;
+    private String [] searchResultHeadings= new String[] {"車次","開車時間"};
     //Data
     Map<Integer, Ticket> ticketMap;
     Map<Integer, Map<Integer, Boolean>> allSeatStatus;
@@ -73,7 +80,17 @@ public class TicketUI {
         initReserveButton();
         initSearchButton();
         initConfirmButton();
+        initSearchResultTable();
         user = new User();
+    }
+
+    private void initSearchResultTable() {
+        String[][] data = {{"",""}};
+        searchResultDataModel = new DefaultTableModel(data,searchResultHeadings);
+        tbl_searchResult.setModel(searchResultDataModel);
+        tbl_searchResult.setPreferredScrollableViewportSize(tbl_searchResult.getPreferredSize());
+        tbl_searchResult.setFillsViewportHeight(true);
+        tbl_searchResult.setVisible(true);
     }
 
     //設定GridBagConstraints
@@ -227,7 +244,7 @@ public class TicketUI {
     }
 
     private void reserveProgress() throws Exception {
-        user = new User();
+        if (user!=null){user = new User();}
         int year, month, day;
         Date startDate;
         Date endDate;
@@ -349,10 +366,51 @@ public class TicketUI {
                 new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-
+                        try {
+                            searchProgress();
+                        } catch (Exception error) {
+                            standErrorBox(error);
+                        }
                     }
                 }
         );
+    }
+
+    private void searchProgress() throws Exception{
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+
+        searchResultDataModel.setNumRows(0);
+        if (user!=null){user = new User();}
+        int year, month, day;
+        Date startDate;
+        Date endDate;
+        Integer start_hour = Integer.parseInt((String) cmb_search_start_hour.getSelectedItem());
+        Integer start_minute = Integer.parseInt((String) cmb_search_start_minute.getSelectedItem());
+
+        Integer end_hour = Integer.parseInt((String) cmb_search_end_hour.getSelectedItem());
+        Integer end_minute = Integer.parseInt((String) cmb_search_end_minute.getSelectedItem());
+
+        year = Integer.parseInt(txf_search_year.getText());
+        month = Integer.parseInt(txf_search_month.getText());
+        day = Integer.parseInt(txf_search_day.getText());
+        startDate = new GregorianCalendar(year, month - 1, day, start_hour, start_minute).getTime();
+        endDate = new GregorianCalendar(year, month - 1, day, end_hour, end_minute).getTime();
+
+        Station departure = (Station) cmb_search_departure.getSelectedItem();
+        Station arrive = (Station) cmb_search_arrive.getSelectedItem();
+        if (departure.compare(arrive)) {
+            throw new Exception("相同起訖站");
+        }
+        Condition reserveSeatCondition = (Condition) cmb_search_condition.getSelectedItem();
+        List<TrainTime> trainTimeList = user.searchTrain(departure.getID(), arrive.getID(),
+                startDate, endDate, 1, reserveSeatCondition.getKey(), 1);
+        if (trainTimeList.size()==0){return;}
+        for(int i = 0;i<trainTimeList.size();i++){
+            String[] data = new String[2];
+            data[0]=Integer.toString(trainTimeList.get(i).getID());
+            data[1]=sdf.format(trainTimeList.get(i).getStationDepartureTime(departure.getID()));
+            searchResultDataModel.addRow(data);
+        }
     }
 
     //初始化確定按鈕
@@ -390,7 +448,7 @@ public class TicketUI {
         cmb_reserve_condition.setEnabled(enable);
     }
 
-    public static void main(String[] args) {
+    public static void start(String[] args) {
         frame = new JFrame("TicketUI");
         frame.setSize(500, 500);
         frame.setContentPane(new TicketUI().pnlBoard);

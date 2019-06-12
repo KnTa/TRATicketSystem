@@ -3,6 +3,7 @@ package schedual;
 import reservation.TrainSeatInfo;
 import train.SeatInfo;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +12,22 @@ public class TrainTable {
     private static List<TrainTime> time_list;
     static {
         time_list = TrainTimeDataControlAdapter.getReadTrainTime().getAllTrainTime();
+    }
+
+    public static  List<TrainTime> searchTrain(int departure, int arrive, Date startTime, Date endTime, int timeCondition, int condition, int number)throws Exception{
+        List<TrainTime> trainTimeList = new ArrayList<>();
+        if(startTime.compareTo(endTime)!=-1){throw new Exception("時間錯誤");}
+        for(TrainTime trainTime:time_list){
+            if(trainTime.checkTrainTime(departure, arrive, startTime, endTime, timeCondition)){
+                trainTimeList.add(trainTime);
+            }
+        }
+        for(int i=trainTimeList.size()-1;i>=0;i--){
+            if(trainTimeList.get(i).getSeatByCondition(departure, arrive, condition, number)==null){
+                trainTimeList.remove(i);
+            }
+        }
+        return trainTimeList;
     }
 
     public static List<TrainSeatInfo> searchTrainSeat(int departure, int arrive, Date startTime, Date endTime, int timeCondition, int condition, int number)throws Exception {

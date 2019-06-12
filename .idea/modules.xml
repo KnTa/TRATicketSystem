@@ -2,7 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TRATicket.iml" filepath="$PROJECT_DIR$/.idea/modules/TRATicket.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TRATicket.main.iml" filepath="$PROJECT_DIR$/.idea/modules/TRATicket.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TRATicket.test.iml" filepath="$PROJECT_DIR$/.idea/modules/TRATicket.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/TRATicketSystem.iml" filepath="$PROJECT_DIR$/TRATicketSystem.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TRATicketSystem.TRATicket.main.iml" filepath="$PROJECT_DIR$/.idea/modules/TRATicketSystem.TRATicket.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/TRATicketSystem.TRATicket.test.iml" filepath="$PROJECT_DIR$/.idea/modules/TRATicketSystem.TRATicket.test.iml" />
     </modules>
   </component>
 </project>
