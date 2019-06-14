@@ -13,7 +13,7 @@ public class Reservation {
 
     public Reservation(){
         ticket_map = new TreeMap<>();
-        readTicketRecorde = ReadTicketRecordAdapter.getReadTicketRecord();
+        readTicketRecorde = ReadTicketRecordFactory.getReadTicketRecord();
     }
 
     public Map<Integer, Ticket> ticketReservation(List<TrainSeatInfo> trainSeatInfoList) {

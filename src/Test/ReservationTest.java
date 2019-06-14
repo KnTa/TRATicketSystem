@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import reservation.*;
 import train.SeatInfo;
-import train.SeatSectionRecordDataControlAdapter;
+import train.SeatSectionRecordDataControlFactory;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,7 +36,7 @@ public class ReservationTest {
         }catch (Exception e){}
         ticketMap = reservation.ticketReservation(list);
         assertTrue(reservation.confirm().size()>0);
-        ticketMap.forEach((id, ticket)->ReadTicketRecordAdapter.getReadTicketRecord().deleteTicketRecord(id));
-        ticketMap.forEach((id, ticket)->SeatSectionRecordDataControlAdapter.getReadSeatSectionRecord().deleteSectionRecord(id));
+        ticketMap.forEach((id, ticket)-> ReadTicketRecordFactory.getReadTicketRecord().deleteTicketRecord(id));
+        ticketMap.forEach((id, ticket)-> SeatSectionRecordDataControlFactory.getReadSeatSectionRecord().deleteSectionRecord(id));
     }
 }

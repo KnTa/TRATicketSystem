@@ -2,17 +2,17 @@ package reservation;
 
 import train.SeatInfo;
 import train.SeatSectionRecordDataControl;
-import train.SeatSectionRecordDataControlAdapter;
+import train.SeatSectionRecordDataControlFactory;
 
 public class Ticket {
     private TicketStatus status;
     private TicketInfo ticket_info;
 
-    private ReadTicketRecord readTicketRecord = ReadTicketRecordAdapter.getReadTicketRecord();
-    private SeatSectionRecordDataControl seatSectionRecordDataControl = SeatSectionRecordDataControlAdapter.getReadSeatSectionRecord();
+    private ReadTicketRecord readTicketRecord = ReadTicketRecordFactory.getReadTicketRecord();
+    private SeatSectionRecordDataControl seatSectionRecordDataControl = SeatSectionRecordDataControlFactory.getReadSeatSectionRecord();
 
     public Ticket(TrainSeatInfo trainSeatInfo){
-        status = new TicketStatus(ReadTicketRecordAdapter.getReadTicketRecord().getMaxId()+1);
+        status = new TicketStatus(ReadTicketRecordFactory.getReadTicketRecord().getMaxId()+1);
         this.ticket_info=new TicketInfo(trainSeatInfo);
         readTicketRecord.setTicketRecord(getStatus().getID()
                 , getTicketInfo().getTrain_seat_info().getTrain_id()

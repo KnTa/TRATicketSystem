@@ -3,7 +3,6 @@ package schedual;
 import reservation.TrainSeatInfo;
 import station.Station;
 import station.StationManager;
-import train.Seat;
 import train.SeatInfo;
 import train.TrainFormation;
 
@@ -28,7 +27,7 @@ public class TrainTime {
         this.end_station = StationManager.getStation(end_station);
 
         train_formation = new TrainFormation(this.ID, this.date, this.train_class);
-        station_schedule_list = TrainStationScheduleDataControlAdapter.getReadTrainStationSchedule().getTrainStationSchedule(id,date);
+        station_schedule_list = TrainStationScheduleDataControlFactory.getReadTrainStationSchedule().getTrainStationSchedule(id,date);
     }
 
     public boolean checkTrainTime(int departure, int arrive, Date startTime, Date endTime, int timeCondition) {

@@ -2,7 +2,7 @@ package train;
 
 import SQL.SQLSeatSectionRecordDataControl;
 
-public class SeatSectionRecordDataControlAdapter {
+public class SeatSectionRecordDataControlFactory {
     public static SeatSectionRecordDataControl getReadSeatSectionRecord(){
         return new SQLSeatSectionRecordDataControl();
     }

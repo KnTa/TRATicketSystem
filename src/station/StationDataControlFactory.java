@@ -2,7 +2,7 @@ package station;
 
 import SQL.SQLStationDataControl;
 
-public class StationDataControlAdapter {
+public class StationDataControlFactory {
     public static StationDataControl getReadStation(){
         return new SQLStationDataControl();
     }

@@ -1,8 +1,7 @@
 package train;
 
 import reservation.ReadTicketRecord;
-import reservation.ReadTicketRecordAdapter;
-import schedual.TrainStationSchedule;
+import reservation.ReadTicketRecordFactory;
 import schedual.TrainTable;
 import schedual.TrainTime;
 
@@ -13,7 +12,7 @@ import java.util.List;
 
 public class SeatSectionRecord {
   private List<SectionRecord> sectionRecordList;
-  private SeatSectionRecordDataControl seatSectionRecordDataControl = SeatSectionRecordDataControlAdapter.getReadSeatSectionRecord();
+  private SeatSectionRecordDataControl seatSectionRecordDataControl = SeatSectionRecordDataControlFactory.getReadSeatSectionRecord();
   private int car_id;
   private int seat_id;
   private int train_time;
@@ -32,7 +31,7 @@ public class SeatSectionRecord {
     sectionRecordList = seatSectionRecordDataControl.getSectionRecord(train_time, date, car_id, seat_id);
   }
   protected void checkReserveOverTime(){
-    ReadTicketRecord readTicketRecord = ReadTicketRecordAdapter.getReadTicketRecord();
+    ReadTicketRecord readTicketRecord = ReadTicketRecordFactory.getReadTicketRecord();
     for(SectionRecord sectionRecord:sectionRecordList){
       Date reserveDate = readTicketRecord.getTicketReserveDate(sectionRecord.ticket_id);
       LocalDateTime localDateTime = LocalDateTime.now();

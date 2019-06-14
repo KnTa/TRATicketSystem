@@ -1,14 +1,10 @@
 package reservation;
 
-import train.SeatInfo;
-
-import java.util.List;
-
 public class TicketStatus {
     private int ID;
     private int status;
 
-    private ReadTicketRecord readTicketRecord = ReadTicketRecordAdapter.getReadTicketRecord();
+    private ReadTicketRecord readTicketRecord = ReadTicketRecordFactory.getReadTicketRecord();
 
     public final int STATUS_CONFIRM = 1;
     public final int STATUS_RESERVING = 0;

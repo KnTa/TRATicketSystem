@@ -2,7 +2,7 @@ package schedual;
 
 import SQL.SQLTrainTimeDataControl;
 
-public class TrainTimeDataControlAdapter {
+public class TrainTimeDataControlFactory {
     public static TrainTimeDataControl getReadTrainTime(){
         return new SQLTrainTimeDataControl();
     }

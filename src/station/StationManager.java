@@ -5,7 +5,7 @@ import java.util.List;
 public class  StationManager {
     private static List<Station> stationList;
     static{
-        stationList = StationDataControlAdapter.getReadStation().getAllStation();
+        stationList = StationDataControlFactory.getReadStation().getAllStation();
     }
 
     public static List<Station> getAllStation(){

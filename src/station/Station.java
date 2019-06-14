@@ -8,7 +8,7 @@ public class Station {
     private static StationDataControl stationDataControl;
 
     static {
-        stationDataControl = StationDataControlAdapter.getReadStation();
+        stationDataControl = StationDataControlFactory.getReadStation();
     }
 
     public Station(int id, String name_EN, String name_TCN){

@@ -11,7 +11,7 @@ import java.util.Map;
 public class TrainTable {
     private static List<TrainTime> time_list;
     static {
-        time_list = TrainTimeDataControlAdapter.getReadTrainTime().getAllTrainTime();
+        time_list = TrainTimeDataControlFactory.getReadTrainTime().getAllTrainTime();
     }
 
     public static  List<TrainTime> searchTrain(int departure, int arrive, Date startTime, Date endTime, int timeCondition, int condition, int number)throws Exception{
