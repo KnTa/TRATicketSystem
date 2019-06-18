@@ -6,7 +6,6 @@ import schedual.TrainTable;
 import train.SeatInfo;
 import user.ReserveCondition;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
